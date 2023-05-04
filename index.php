@@ -5,6 +5,8 @@ require_once('./config.php');
 
 Config::load_config();
 
+use Models\Users;
+
 class Router
 {
   public static function get(string $path, callable $callback)
@@ -30,7 +32,7 @@ function view($view_name, $data)
 
   foreach ($data as $key => $value) {
     var_dump($value);
-    $templateContent = str_replace("{{$key}}", $value, $templateContent);
+    // $templateContent = str_replace("{{$key}}", $value, $templateContent);
   }
 
   echo $templateContent;
@@ -45,6 +47,6 @@ Router::get('users', function () {
 Router::get('componentes', function () {
   // $json = json_encode();
   // header('Content-Type: application/json');
-
-  return view('home', ["data" => Models\Users::all()]);
+  // var_dump(get_declared_classes());
+  return view('home', ["data" => Users::all()]);
 });
