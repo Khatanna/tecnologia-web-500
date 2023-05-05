@@ -10,9 +10,20 @@ use App\Auth\Auth;
 use App\Entities\UsuarioEntity;
 use App\Controllers\UsuarioController;
 
-function view($view_name): void
+function view(string $view_name, ?array $data): void
 {
-  require_once __DIR__ . "\\src\\App\\views\\$view_name.php";
+  $path = "\\src\\App\\Views\\$view_name.php";
+  if (str_contains($view_name, ".")) {
+    [$parent, $child] = explode(".", $view_name);
+    $path = str_replace("Views\\$view_name", "Views\\$parent\\$child", $path);
+  }
+
+  if (isset($data)) {
+    foreach ($data as $key => $value) {
+      $GLOBALS[$key] = $value;
+    }
+  }
+  require_once __DIR__ . $path;
 }
 
 Router::get('home', fn() => view('home'));
@@ -37,3 +48,7 @@ Router::post('login', function($request) {
 });
 
 Router::get('greet', fn() => UsuarioController::greet());
+
+Router::get('componentes', function() {
+  view('componentes.index');
+});

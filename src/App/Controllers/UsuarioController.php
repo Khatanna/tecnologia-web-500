@@ -6,6 +6,6 @@ class UsuarioController
 {
   public static function greet()
   {
-    view('login');
+    view('login', ["name" => "charlie"]);
   }
 }

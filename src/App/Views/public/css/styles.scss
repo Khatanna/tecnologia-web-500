@@ -1,0 +1,11 @@
+$primary: #ffd900;
+$secondary: #14154d;
+$theme-colors: (
+        "primary": $primary,
+        "secondary": $secondary
+);
+
+@import '../../../../../node_modules/bootstrap/scss/bootstrap.scss';
+@import '../../../../../node_modules/bootstrap/scss/bootstrap-grid.scss';
+@import '../../../../../node_modules/bootstrap/scss/bootstrap-reboot.scss';
+@import '../../../../../node_modules/bootstrap/scss/bootstrap-utilities.scss';
