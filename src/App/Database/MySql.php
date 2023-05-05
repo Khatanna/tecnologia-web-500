@@ -1,10 +1,11 @@
 <?php
 
-namespace Database;
+namespace App\Database;
 
 class MySql
 {
-  private static ?self $instance = null;
+  private static
+  ?self $instance = null;
   public $connection;
   private function __construct()
   {

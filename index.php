@@ -5,48 +5,35 @@ require_once('./config.php');
 
 Config::load_config();
 
-use Models\Users;
+use App\Routing\Router;
+use App\Auth\Auth;
+use App\Entities\UsuarioEntity;
+use App\Controllers\UsuarioController;
 
-class Router
+function view($view_name): void
 {
-  public static function get(string $path, callable $callback)
-  {
-    $path_uri = array_reverse(explode("/", $_SERVER['REQUEST_URI']))[0];
-    if ($path_uri === $path) {
-      echo $callback();
-    }
-  }
-
-  public static function post(string $path, callable $callback)
-  {
-    // $path_uri = array_reverse(explode("/", $_SERVER['REQUEST_URI']))[0];
-  }
+  require_once __DIR__ . "\\src\\App\\views\\$view_name.php";
 }
 
-function view($view_name, $data)
-{
-  header('Content-Type: text/html');
-  $path = __DIR__ . "\\src\\views\\$view_name.php";
+Router::get('home', fn() => view('home'));
 
-  $templateContent = file_get_contents($path);
-
-  foreach ($data as $key => $value) {
-    var_dump($value);
-    // $templateContent = str_replace("{{$key}}", $value, $templateContent);
-  }
-
-  echo $templateContent;
-}
-
-Router::get('home', function () {
+Router::post('home', function($request) {
+  echo $request['name'];
+  view('home');
 });
 
-Router::get('users', function () {
+Router::get('users', function() {
+  view('users');
 });
 
-Router::get('componentes', function () {
-  // $json = json_encode();
-  // header('Content-Type: application/json');
-  // var_dump(get_declared_classes());
-  return view('home', ["data" => Users::all()]);
+Router::get('login', function() {
+  view('login');
 });
+
+Router::post('login', function($request) {
+  $usuario = new UsuarioEntity($request['id']);
+  Auth::login($usuario);
+  view('login');
+});
+
+Router::get('greet', fn() => UsuarioController::greet());
