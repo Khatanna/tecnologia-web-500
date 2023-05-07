@@ -1,19 +1,22 @@
 <?php
 
 namespace App\Routing;
+
 class Router
 {
-  public static function get(string $path, callable|string $callback): void
+  public static function get(string $path, callable $callback): void
   {
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-      $path_uri = array_reverse(explode("/", $_SERVER['REQUEST_URI']))[0];
+      $path = "/" . $path;
+      $route = str_replace("/tecnologia-web-500", "", $_SERVER['REQUEST_URI']);
+      $params = array_reverse(explode("/", $route));
 
-      if ($path_uri === $path) {
-        if (is_callable($callback)) {
-          $callback();
-        } else {
+      foreach ($params as $param) {
+        $path = preg_replace("/{.+}/", $param, $path);
+      }
 
-        }
+      if ($route === $path) {
+        $callback();
       }
     }
   }
@@ -24,11 +27,7 @@ class Router
       $path_uri = array_reverse(explode("/", $_SERVER['REQUEST_URI']))[0];
 
       if ($path_uri === $path) {
-        if (is_callable($callback)) {
-          $callback($_POST);
-        } else {
-
-        }
+        $callback($_POST);
       }
     }
   }
