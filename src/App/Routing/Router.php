@@ -28,14 +28,15 @@ class Router
   private function execute(string $path, callable $callback): void
   {
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-
       extract($_GET);
       $path = "/" . $path;
       $route = str_replace("/tecnologia-web-500", "", $_SERVER['REQUEST_URI']);
       $params = array_reverse(explode("/", $route));
 
       foreach ($params as $param) {
-        $path = preg_replace("/{.+}/", $param, $path);
+        if (is_numeric($param)) {
+          $path = preg_replace("/{.+}/", $param, $path);
+        }
       }
 
       foreach (explode("/", $path) as $arg) {
@@ -92,7 +93,7 @@ class Router
         if (isset($send_param)) {
           $callback($_POST, intval($send_param));
         } else {
-          $callback();
+          $callback($_POST);
         }
       }
     }

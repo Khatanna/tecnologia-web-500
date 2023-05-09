@@ -78,7 +78,7 @@
             </form>
           </li>
           <li>
-            <a class="bi bi-plus-circle dropdown-item" href="#">
+            <a class="bi bi-plus-circle dropdown-item" href="/tecnologia-web-500/componentes/crear">
               <div class="float-end"><small><small>Crear componente</small></small></div>
             </a>
           </li>
@@ -118,7 +118,7 @@
                     </button>
                   </a>
                 </li>
-                <li><a class="bi bi-pencil-square dropdown-item" href="#">
+                <li><a class="bi bi-pencil-square dropdown-item" href="/tecnologia-web-500/componentes/actualizar">
                     <div class="float-end">Editar</div>
                   </a></li>
               </ul>

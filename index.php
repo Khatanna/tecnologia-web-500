@@ -59,14 +59,17 @@ Router::get('login', function() {
   }
 });
 
-Router::get('componentes', fn(int $page, ?string $search) => ComponenteController::index($page, $search));
+Router::get('componentes', fn(int $page, ?string $search = null) => ComponenteController::index($page, $search));
 Router::get('componentes/delete/{id}', fn(int $id) => ComponenteController::delete($id));
 Router::get('componentes/{id}', fn(int $id) => ComponenteController::show($id));
-
+Router::get('componentes/crear', fn() => view('componentes.crear'));
+Router::get('componentes/actualizar', fn() => view('componentes.actualizar'));
 Router::get('usuarios/form', function() {
   view('usuarios.form');
 });
 
+Router::post('componentes', fn($request) => ComponenteController::create($request));
+Router::post('componentes/update/{id}', fn($request, int $id) => ComponenteController::update($request, $id));
 Router::post('usuarios', fn($request) => UsuarioController::create($request));
 Router::post('usuarios/update/{id}', fn($request, int $id) => UsuarioController::update($request, $id));
 Router::get('usuarios/{id}', fn(int $id) => UsuarioController::show($id));
@@ -86,4 +89,3 @@ Router::post('logout', function() {
   Auth::logout();
   view('home', redirect: true);
 });
-

@@ -19,6 +19,16 @@ class ComponenteController
     view('componentes.show', ['componente' => Componentes::get_by_id($id)]);
   }
 
+  public static function create($request)
+  {
+    self::index(1, null, Componentes::create($request));
+  }
+
+  public static function update($request, int $id)
+  {
+    echo "update";
+  }
+
   public static function delete(int $id)
   {
     self::index(1, null, Componentes::delete($id));

@@ -55,6 +55,18 @@ class Componentes implements IOperaciones
 
   public static function create(mixed $request): string
   {
+    self::connect();
+    extract($request);
+    $image = $_FILES['imagen']['tmp_name'];
+    $imagen = base64_encode(file_get_contents(addslashes($image)));
+    $result = mysqli_query(self::$connection, "INSERT INTO Componente(codigo_componente, imagen_componente, descripcion_componente, id_familia, id_tipo) VALUES ('$codigo', '$imagen', '$descripcion', 1, 1)");
+    return "";
+  }
+
+  public static function update($request, int $id): string
+  {
+    extract($request);
+    
   }
 
   public static function delete(int $id): string
