@@ -1,177 +1,179 @@
-<?php
-$path = "/tecnologia-web-500/src/App/Views/public/css/styles.css";
-?>
-
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en" data-bs-theme="dark">
 <head>
-  <title>Componentes</title>
-  <link rel="stylesheet" href="<?= $path ?>">
+  <?php require_once sprintf("%s/..\components\head.php", __DIR__) ?>
+  <style>
+      #search:focus-visible {
+          outline: none;
+      }
 
+      i {
+          font-size: 1.7rem;
+          cursor: pointer;
+          margin-right: 1.1rem;
+      }
+
+      i:hover {
+          color: #ffd900
+      }
+
+      .codigo {
+          text-decoration: none;
+      }
+
+      .codigo:hover {
+          text-decoration: underline;
+      }
+  </style>
+  <title>Componentes</title>
 </head>
 <body>
-<h1>Componentes</h1>
-
-<button class="btn btn-primary">Botón</button>
-<div class="container-fluid">
-  <div class="row">
-    <div class="col">
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum magni mollitia odio omnis
-        quos. Animi, autem dolores earum eos et officia officiis omnis porro, quis rem reprehenderit unde! Alias,
-        quas.</p>
+<?php if (isset($message)) : ?>
+  <div class="toast position-absolute top-0 start-50 translate-middle z-3 show border border-light mt-4" role="alert" aria-live="assertive" aria-atomic="false">
+    <div class="toast-header">
+      <strong class="me-auto">Mensaje de sesión</strong>
+      <button type="button" class="btn btn-outline-danger theme px-2 py-0" data-bs-dismiss="toast" aria-label="Close">
+        x
+      </button>
+    </div>
+    <div class="toast-body border boder-light text-success">
+      <?= $message ?>
     </div>
   </div>
-</div>
+<?php endif; ?>
 
-<div class="dropdown" data-bs-theme="light">
-  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButtonLight" data-bs-toggle="dropdown" aria-expanded="false">
-    Default dropdown
-  </button>
-  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButtonLight">
-    <li><a class="dropdown-item active" href="#">Action</a></li>
-    <li><a class="dropdown-item" href="#">Action</a></li>
-    <li><a class="dropdown-item" href="#">Another action</a></li>
-    <li><a class="dropdown-item" href="#">Something else here</a></li>
-    <li>
-      <hr class="dropdown-divider">
-    </li>
-    <li><a class="dropdown-item" href="#">Separated link</a></li>
-  </ul>
-</div>
+<nav class="nav navbar-expand-lg bg-body-tertiary border-bottom top-0 position-sticky">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse py-1" id="navbar">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 align-items-center">
+        <li class="nav-item me-5 fs-4"><a href="/tecnologia-web-500/home" class="text-decoration-none">Component
+            finder</a></li>
+        <li class="nav-item">
+          <div class="d-flex flex-row rounded-pill py-1 align-items-center border border-light-subtle">
+            <div class="w-100">
+              <form action="componentes" class="d-flexblack px-3" method="GET">
+                <input type="text" class="w-100 border-0 h-100 m-0 p-1 bg-body-tertiary" name="search" autocomplete="off" id="search" placeholder="Buscar componentes..."/>
+              </form>
+            </div>
+            <i class="bi bi-search" style="font-size: 1.3rem"></i>
+          </div>
+        </li>
+      </ul>
+      <i class="bi bi-brightness-high-fill" role="button" id="theme" data-bs-theme-value="dark"></i>
+      <div class="dropdown">
+        <i href="#" class="bi bi-person-circle" role="button" data-bs-toggle="dropdown" aria-expanded="false"></i>
 
-<div class="dropdown" data-bs-theme="dark">
-  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButtonDark" data-bs-toggle="dropdown" aria-expanded="false">
-    Dark dropdown
-  </button>
-  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButtonDark">
-    <li><a class="dropdown-item active" href="#">Action</a></li>
-    <li><a class="dropdown-item" href="#">Action</a></li>
-    <li><a class="dropdown-item" href="#">Another action</a></li>
-    <li><a class="dropdown-item" href="#">Something else here</a></li>
-    <li>
-      <hr class="dropdown-divider">
-    </li>
-    <li><a class="dropdown-item" href="#">Separated link</a></li>
-  </ul>
-</div>
+        <ul class="dropdown-menu">
+          <li><a class="bi bi-gear dropdown-item" href="usuarios/<?= \App\Auth\Auth::user()->id ?>">
+              <div class="float-end">Perfil</div>
+            </a></li>
+          <li>
+            <form action="logout" method="POST">
+              <button class="bi bi-box-arrow-left dropdown-item" href="#" type="submit" role="button">
+                <div class="float-end">Cerrar sesión</div>
+              </button>
+            </form>
+          </li>
+          <li>
+            <a class="bi bi-plus-circle dropdown-item" href="#">
+              <div class="float-end"><small><small>Crear componente</small></small></div>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
 
-<li class="nav-item dropdown">
-  <button class="btn btn-link nav-link py-2 px-0 px-lg-2 dropdown-toggle d-flex align-items-center show" id="bd-theme" type="button" aria-expanded="true" data-bs-toggle="dropdown" data-bs-display="static" aria-label="Toggle theme (dark)">
-    <svg class="bi my-1 theme-icon-active">
-      <use href="#moon-stars-fill"></use>
-    </svg>
-    <span class="d-lg-none ms-2" id="bd-theme-text">Toggle theme</span>
-  </button>
-  <ul class="dropdown-menu dropdown-menu-end show" aria-labelledby="bd-theme-text" data-bs-popper="static">
-    <li>
-      <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
-        <svg class="bi me-2 opacity-50 theme-icon">
-          <use href="#sun-fill"></use>
-        </svg>
-        Light
-        <svg class="bi ms-auto d-none">
-          <use href="#check2"></use>
-        </svg>
-      </button>
-    </li>
-    <li>
-      <button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="dark" aria-pressed="true">
-        <svg class="bi me-2 opacity-50 theme-icon">
-          <use href="#moon-stars-fill"></use>
-        </svg>
-        Dark
-        <svg class="bi ms-auto d-none">
-          <use href="#check2"></use>
-        </svg>
-      </button>
-    </li>
-    <li>
-      <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="auto" aria-pressed="false">
-        <svg class="bi me-2 opacity-50 theme-icon">
-          <use href="#circle-half"></use>
-        </svg>
-        Auto
-        <svg class="bi ms-auto d-none">
-          <use href="#check2"></use>
-        </svg>
-      </button>
-    </li>
-  </ul>
-</li>
+<main class="container-fluid mt-3">
+  <div class="row justify-content-center">
+    <div class="col-5">
+      <?php foreach ($componentes as $componente): ?>
+        <div class="d-flex flex-row align-items-center mb-1">
+          <a class="text-decoration-none text-body-secondary" href="componentes/<?= $componente->id ?>">
+            <div class="d-flex flex-row">
+              <div class="py-2">
+                <img src="data:image/*;charset=utf-8;base64,<?= $componente->imagen ?>" alt="<?= $componente->codigo ?>" width="30" class="rounded rounded-circle me-2"/>
+              </div>
+              <div class="d-flex flex-column">
+                <small><small>Componentes/<b><?= $componente->codigo ?></b></small></small>
+                <small><small>https://www.tecnologia-web-500/componentes/<?= $componente->id ?>.com</small></small>
+              </div>
+            </div>
+          </a>
+          <?php if (\App\Auth\Auth::user()->rol === 'administrador'): ?>
+            <div class="dropdown position-relative mt-1">
+              <i class="bi bi-three-dots-vertical position-absolute bottom-0 start-0 role=" button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false" style="font-size: 1rem"></i>
 
-<script src="/tecnologia-web-500/src/App/views/public/js/bootstrap.min.js"></script>
+              <ul class="dropdown-menu">
+                <li>
+                  <a href="componentes/delete/<?= $componente->id ?>">
+                    <button class="bi bi-trash dropdown-item" href="#" type="submit" role="button">
+                      <div class="float-end">Borrar</div>
+                    </button>
+                  </a>
+                </li>
+                <li><a class="bi bi-pencil-square dropdown-item" href="#">
+                    <div class="float-end">Editar</div>
+                  </a></li>
+              </ul>
+            </div>
+          <?php endif; ?>
+        </div>
+        <div class="mb-3">
+          <a class="codigo" href="componentes/<?= $componente->id ?>"><?= $componente->codigo ?></a>
+          <div><?= $componente->descripcion ?></div>
+        </div>
+      <?php endforeach; ?>
+      <div aria-label="Page navigation example">
+        <ul class="pagination pagination-sm">
+          <?php if ($page === 1): ?>
+            <li class="page-item">
+              <a class="page-link" href="?page=<?= $pages ?><?= isset($search) ? '&search=' . $search : '' ?>">Anterior</a>
+            </li>
+          <?php else: ?>
+            <li class="page-item">
+              <a class="page-link" href="?page=<?= $page - 1 ?><?= isset($search) ? '&search=' . $search : '' ?>">Anterior</a>
+            </li>
+          <?php endif; ?>
+          <?php for ($i = $page - 1; $i < $page + 10; $i++) : ?>
+            <?php if ($i < $pages): ?>
+              <li class="page-item">
+                <a class="page-link" href="?page=<?= $i + 1 ?><?= isset($search) ? '&search=' . $search : '' ?>"><?= $i + 1 ?></a>
+              </li>
+            <?php endif ?>
+          <?php endfor; ?>
+          <?php if ($page == $pages): ?>
+            <li class="page-item"><a class="page-link" href="?page=1<?= isset($search) ? '&search=' . $search : '' ?>">Siguiente</a>
+            </li>
+          <?php else: ?>
+            <li class="page-item">
+              <a class="page-link" href="?page=<?= $page + 1 ?><?= isset($search) ? '&search=' . $search : '' ?>">Siguiente</a>
+            </li>
+          <?php endif; ?>
+        </ul>
+      </div>
+    </div>
+    <div class="col-3"></div>
+  </div>
+
+</main>
+
+<?php require_once sprintf("%s/..\components\script.php", __DIR__) ?>
 <script>
-    (() => {
-        'use strict'
-
-        const storedTheme = localStorage.getItem('theme')
-
-        const getPreferredTheme = () => {
-            if (storedTheme) {
-                return storedTheme
-            }
-
-            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+    theme.addEventListener('click', () => {
+        theme.innerText = "";
+        if (theme.className === "bi bi-brightness-high-fill") {
+            theme.className = "bi bi-moon-fill";
+        } else {
+            theme.className = "bi bi-brightness-high-fill";
         }
-
-        const setTheme = function (theme) {
-            if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                document.documentElement.setAttribute('data-bs-theme', 'dark')
-            } else {
-                document.documentElement.setAttribute('data-bs-theme', theme)
-            }
-        }
-
-        setTheme(getPreferredTheme())
-
-        const showActiveTheme = (theme, focus = false) => {
-            const themeSwitcher = document.querySelector('#bd-theme')
-
-            if (!themeSwitcher) {
-                return
-            }
-
-            const themeSwitcherText = document.querySelector('#bd-theme-text')
-            const activeThemeIcon = document.querySelector('.theme-icon-active use')
-            const btnToActive = document.querySelector(`[data-bs-theme-value="${theme}"]`)
-            const svgOfActiveBtn = btnToActive.querySelector('svg use').getAttribute('href')
-
-            document.querySelectorAll('[data-bs-theme-value]').forEach(element => {
-                element.classList.remove('active')
-                element.setAttribute('aria-pressed', 'false')
-            })
-
-            btnToActive.classList.add('active')
-            btnToActive.setAttribute('aria-pressed', 'true')
-            activeThemeIcon.setAttribute('href', svgOfActiveBtn)
-            const themeSwitcherLabel = `${themeSwitcherText.textContent} (${btnToActive.dataset.bsThemeValue})`
-            themeSwitcher.setAttribute('aria-label', themeSwitcherLabel)
-
-            if (focus) {
-                themeSwitcher.focus()
-            }
-        }
-
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-            if (storedTheme !== 'light' || storedTheme !== 'dark') {
-                setTheme(getPreferredTheme())
-            }
-        })
-
-        window.addEventListener('DOMContentLoaded', () => {
-            showActiveTheme(getPreferredTheme())
-
-            document.querySelectorAll('[data-bs-theme-value]')
-                .forEach(toggle => {
-                    toggle.addEventListener('click', () => {
-                        const theme = toggle.getAttribute('data-bs-theme-value')
-                        localStorage.setItem('theme', theme)
-                        setTheme(theme)
-                        showActiveTheme(theme, true)
-                    })
-                })
-        })
-    })()
+    })
 </script>
 </body>
 

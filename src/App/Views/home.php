@@ -4,110 +4,103 @@
 <head>
   <?php require_once sprintf("%s/\components\head.php", __DIR__) ?>
   <title>Home</title>
-
   <style>
+      #search:focus-visible {
+          outline: none;
+      }
+
+      a:hover {
+          outline: 1pt solid rgba(255, 255, 255, 0.4);
+      }
+
+      a[class~="text-black"]:hover {
+          outline: 1pt solid rgba(0, 0, 0, 0.4);
+      }
   </style>
 </head>
 
 <body>
-  <div class="navbar navbar-expand-sm bg-body-tertiary">
-    <div class="container">
-      <button class="navbar-toggler float-end" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+<?php if (isset($message)) : ?>
+  <div class="toast position-absolute top-0 start-50 translate-middle-x show border border-light mt-4" role="alert" aria-live="assertive" aria-atomic="false">
+    <div class="toast-header">
+      <strong class="me-auto">Mensaje de sesión</strong>
+      <button type="button" class="btn btn-outline-danger theme px-2 py-0" data-bs-dismiss="toast" aria-label="Close">
+        x
       </button>
+    </div>
+    <div class="toast-body border boder-light text-success">
+      <?= $message ?>
+    </div>
+  </div>
+<?php endif; ?>
 
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="">
-              <img src="https://eispdm.com/public/imagenes/logo_eispdm.png" alt="Logo" width="30">
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Inicio</a>
-          </li>
-        </ul>
-        <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Buscar componentes..." aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Buscar</button>
-        </form>
+<main class="container-fluid">
+  <div class="row align-items-center justify-content-center" style="min-height: 100vh">
+    <div class="col-11">
+      <div class="row justify-content-center">
+        <div class="col-12 col-sm-10 col-md-8 col-lg-6 text-center">
+          <h1 style="
+                  font-size: 3.3rem;
+                  letter-spacing: -4px;
+                " id="title">
+            <div class="d-inline">
+              <span class="letter"><b>D</b></span>
+              <span class="letter"><b>e</b></span>
+              <span class="letter"><b>v</b></span>
+              <span class="letter"><b>i</b></span>
+              <span class="letter"><b>c</b></span>
+              <span class="letter"><b>e</b></span>
+              <span class="letter"><b>s</b></span>
+            </div>
+            <div class="mx-2 d-inline"></div>
+            <div class="d-inline">
+              <span class="letter"><b>F</b></span>
+              <span class="letter"><b>i</b></span>
+              <span class="letter"><b>n</b></span>
+              <span class="letter"><b>d</b></span>
+              <span class="letter"><b>e</b></span>
+              <span class="letter"><b>r</b></span>
+            </div>
+          </h1>
+        </div>
+      </div>
+      <div class="row justify-content-center my-3">
+        <div class="col-12 col-sm-10 col-md-6 col-lg-4 rounded-pill py-1 d-flex flex-row align-items-center border border-light-subtle">
+          <div style="width: min-content" class="text-center fs-5 me-2">
+            🔍
+          </div>
+          <div class="w-100">
+            <form action="" class="d-flexblack" method="GET">
+              <input type="text" class="w-100 border-0 h-100 m-0 p-1 bg-body" name="query" autocomplete="off" id="search"/>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-12 col-sm-10 col-md-8 col-lg-6 text-center">
+          <a class="btn rounded-1 btn-sm border-1" href="componentes?page=1" role="button">
+            Componentes
+          </a>
+          <a class="btn rounded-1 btn-sm border-1" href="familias" role="button">
+            Familias
+          </a>
+        </div>
+      </div>
+      <div class="row justify-content-center mt-2">
+        <div class="col-12 col-sm-10 col-md-8 col-lg-6 text-center">
+          <small>
+            <b>Modo oscuro:</b>
+            <div href="" class="text-primary text-decoration-none d-inline" role="button" id="theme" data-bs-theme-value="dark">
+              activado
+            </div>
+          </small>
+        </div>
       </div>
     </div>
   </div>
-  <script src="/tecnologia-web-500/src/App/views/public/js/bootstrap.min.js"></script>
-  <script>
-    (() => {
-      'use strict'
+</main>
 
-      const storedTheme = localStorage.getItem('theme')
-
-      const getPreferredTheme = () => {
-        if (storedTheme) {
-          return storedTheme
-        }
-
-        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-      }
-
-      const setTheme = function(theme) {
-        if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-          document.documentElement.setAttribute('data-bs-theme', 'dark')
-        } else {
-          document.documentElement.setAttribute('data-bs-theme', theme)
-        }
-      }
-
-      setTheme(getPreferredTheme())
-
-      const showActiveTheme = (theme, focus = false) => {
-        const themeSwitcher = document.querySelector('#bd-theme')
-
-        if (!themeSwitcher) {
-          return
-        }
-
-        const themeSwitcherText = document.querySelector('#bd-theme-text')
-        const activeThemeIcon = document.querySelector('.theme-icon-active use')
-        const btnToActive = document.querySelector(`[data-bs-theme-value="${theme}"]`)
-        const svgOfActiveBtn = btnToActive.querySelector('svg use').getAttribute('href')
-
-        document.querySelectorAll('[data-bs-theme-value]').forEach(element => {
-          element.classList.remove('active')
-          element.setAttribute('aria-pressed', 'false')
-        })
-
-        btnToActive.classList.add('active')
-        btnToActive.setAttribute('aria-pressed', 'true')
-        activeThemeIcon.setAttribute('href', svgOfActiveBtn)
-        const themeSwitcherLabel = `${themeSwitcherText.textContent} (${btnToActive.dataset.bsThemeValue})`
-        themeSwitcher.setAttribute('aria-label', themeSwitcherLabel)
-
-        if (focus) {
-          themeSwitcher.focus()
-        }
-      }
-
-      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-        if (storedTheme !== 'light' || storedTheme !== 'dark') {
-          setTheme(getPreferredTheme())
-        }
-      })
-
-      window.addEventListener('DOMContentLoaded', () => {
-        showActiveTheme(getPreferredTheme())
-
-        document.querySelectorAll('[data-bs-theme-value]')
-          .forEach(toggle => {
-            toggle.addEventListener('click', () => {
-              const theme = toggle.getAttribute('data-bs-theme-value')
-              localStorage.setItem('theme', theme)
-              setTheme(theme)
-              showActiveTheme(theme, true)
-            })
-          })
-      })
-    })()
-  </script>
+<?php require_once sprintf("%s/\components\script.php", __DIR__) ?>
 </body>
 
 </html>

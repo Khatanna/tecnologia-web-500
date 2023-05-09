@@ -8,54 +8,54 @@ Config::load_config();
 
 class Migrate
 {
-    public static function migrate()
-    {
-        $db = MySql::get_instance()->connection;
+  public static function migrate()
+  {
+    $db = MySql::get_instance()->connection;
 
-        $familia_reset = str_replace(
-            '\r\n',
-            '',
-            "
+    $familia_reset = str_replace(
+      '\r\n',
+      '',
+      "
         DROP TABLE IF EXISTS familia;
         "
-        );
-        $tipo_reset = str_replace(
-            '\r\n',
-            '',
-            "
+    );
+    $tipo_reset = str_replace(
+      '\r\n',
+      '',
+      "
         DROP TABLE IF EXISTS tipo;
         "
-        );
-        $componente_reset = str_replace(
-            '\r\n',
-            '',
-            "
+    );
+    $componente_reset = str_replace(
+      '\r\n',
+      '',
+      "
         DROP TABLE IF EXISTS componente;
         "
-        );
+    );
 
-        $familia = str_replace(
-            '\r\n',
-            '',
-            '
+    $familia = str_replace(
+      '\r\n',
+      '',
+      '
         CREATE TABLE IF NOT EXISTS familia (
             id_familia  INT             AUTO_INCREMENT,
             nombre      VARCHAR(100)    NOT NULL,
             descripcion TEXT            NOT NULL,
             PRIMARY KEY(id_familia)
         );'
-        );
+    );
 
-        $tipo = str_replace('\r\n', '', '
+    $tipo = str_replace('\r\n', '', '
         CREATE TABLE IF NOT EXISTS tipo (
             id_tipo     INT             AUTO_INCREMENT,
             nombre      VARCHAR(100)    NOT NULL,
-            descripciom TEXT            NOT NULL,
+            descripcion TEXT            NOT NULL,
             PRIMARY KEY(id_tipo)
         );
         ');
 
-        $componente = str_replace('\r\n', '', '
+    $componente = str_replace('\r\n', '', '
         CREATE TABLE IF NOT EXISTS componente (
             id_componente           INT         AUTO_INCREMENT,
             codigo_componente       VARCHAR(20) NOT NULL,
@@ -68,15 +68,15 @@ class Migrate
             FOREIGN KEY(id_tipo) REFERENCES tipo(id_tipo) ON DELETE CASCADE
         );');
 
-        echo mysqli_query($db, "SET foreign_key_checks = 0;");
-        echo mysqli_query($db, $familia_reset);
-        echo mysqli_query($db, $tipo_reset);
-        echo mysqli_query($db, $componente_reset);
-        echo mysqli_query($db, "SET foreign_key_checks = 1;");
-        echo mysqli_query($db, $familia);
-        echo mysqli_query($db, $tipo);
-        echo mysqli_query($db, $componente);
-    }
+    echo mysqli_query($db, "SET foreign_key_checks = 0;");
+    echo mysqli_query($db, $familia_reset);
+    echo mysqli_query($db, $tipo_reset);
+    echo mysqli_query($db, $componente_reset);
+    echo mysqli_query($db, "SET foreign_key_checks = 1;");
+    echo mysqli_query($db, $familia);
+    echo mysqli_query($db, $tipo);
+    echo mysqli_query($db, $componente);
+  }
 }
 
 Migrate::migrate();
